@@ -1,5 +1,10 @@
 package ua.com.alevel.hw2.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Mouse extends TechProduct {
 
     private final ConnectionType connectionType;
@@ -23,13 +28,5 @@ public class Mouse extends TechProduct {
                 ", count=" + count +
                 ", price=" + price +
                 '}';
-    }
-
-    public ConnectionType getConnectionType() {
-        return connectionType;
-    }
-
-    public int getDpiAmount() {
-        return dpiAmount;
     }
 }

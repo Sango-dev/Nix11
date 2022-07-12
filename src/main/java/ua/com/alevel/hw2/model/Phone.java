@@ -1,5 +1,10 @@
 package ua.com.alevel.hw2.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Phone extends TechProduct {
 
     private final int coreNumbers;
@@ -22,13 +27,5 @@ public class Phone extends TechProduct {
                 ", count=" + count +
                 ", price=" + price +
                 '}';
-    }
-
-    public int getCoreNumbers() {
-        return coreNumbers;
-    }
-
-    public int getBatteryPower() {
-        return batteryPower;
     }
 }

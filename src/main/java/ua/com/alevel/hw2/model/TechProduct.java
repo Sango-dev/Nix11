@@ -1,7 +1,12 @@
 package ua.com.alevel.hw2.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
 public abstract class TechProduct {
 
     protected final String id;
@@ -15,34 +20,6 @@ public abstract class TechProduct {
         this.model = model;
         this.manufacturer = manufacturer;
         this.count = count;
-        this.price = price;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
         this.price = price;
     }
 }

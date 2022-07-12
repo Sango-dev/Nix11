@@ -10,7 +10,6 @@ import java.lang.reflect.Field;
 
 public class Main {
 
-
     private static final ProductService PRODUCT_SERVICE = new ProductService();
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
@@ -47,10 +46,5 @@ public class Main {
         System.out.println("\nDelete mouse object: ");
         PRODUCT_SERVICE.deleteProduct(id);
         PRODUCT_SERVICE.printAllProducts();
-
-
-
-
-
     }
 }

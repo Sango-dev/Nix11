@@ -1,11 +1,18 @@
 package ua.com.alevel.hw2.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.com.alevel.hw2.model.Mouse;
+import ua.com.alevel.hw2.model.Phone;
 import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.WashingMachine;
 
 import java.util.*;
 
 
 public class TechProductRepository implements CrudRepository {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TechProductRepository.class);
 
     private final List<TechProduct> products;
 
@@ -15,7 +22,54 @@ public class TechProductRepository implements CrudRepository {
 
     @Override
     public void save(TechProduct product) {
-        products.add(product);
+        if (product == null) {
+            final IllegalArgumentException exception = new IllegalArgumentException("Cannot save a null product");
+            LOGGER.error(exception.getMessage(), exception);
+            throw exception;
+        } else {
+            checkDuplicates(product);
+            products.add(product);
+        }
+    }
+
+    private void checkDuplicates(TechProduct product) {
+        String s = null;
+        if (product instanceof Phone) {
+            s = "Phone";
+        } else if (product instanceof Mouse) {
+            s = "Mouse";
+        } else if (product instanceof WashingMachine) {
+            s = "WashingMachine";
+        }
+
+        boolean flag = false;
+
+        for (TechProduct p : products) {
+            if (s.equals("Phone") && p instanceof Phone) {
+                if (((Phone) product).hashCode() == ((Phone) p).hashCode() && ((Phone) product).equals(((Phone) p))) {
+                    flag = true;
+                }
+            }
+
+            if (s.equals("Mouse") && p instanceof Mouse) {
+                if (((Mouse) product).hashCode() == ((Mouse) p).hashCode() && ((Mouse) product).equals(((Mouse) p))) {
+                    flag = true;
+                }
+            }
+
+            if (s.equals("WashingMachine") && p instanceof WashingMachine) {
+                if (((WashingMachine) product).hashCode() == ((WashingMachine) p).hashCode() && ((WashingMachine) product).equals(((WashingMachine) p))) {
+                    flag = true;
+                }
+            }
+        }
+
+        if (flag == true) {
+            final IllegalArgumentException exception = new IllegalArgumentException("Duplicate product: " +
+                    product.getId());
+            LOGGER.error(exception.getMessage(), exception);
+            throw exception;
+        }
     }
 
     @Override

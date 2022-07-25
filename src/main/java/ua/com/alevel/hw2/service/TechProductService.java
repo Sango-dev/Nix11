@@ -1,10 +1,10 @@
-package ua.com.alevel.hw3.service;
+package ua.com.alevel.hw2.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.com.alevel.hw3.model.TechProduct;
-import ua.com.alevel.hw3.model.TechProductType;
-import ua.com.alevel.hw3.repository.TechProductRepository;
+import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.TechProductType;
+import ua.com.alevel.hw2.repository.TechProductRepository;
 
 import java.util.LinkedList;
 import java.util.List;

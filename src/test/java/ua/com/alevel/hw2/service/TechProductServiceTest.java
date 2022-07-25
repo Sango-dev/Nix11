@@ -1,4 +1,4 @@
-package ua.com.alevel.hw3.service;
+package ua.com.alevel.hw2.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import ua.com.alevel.hw3.model.Manufacturer;
-import ua.com.alevel.hw3.model.TechProduct;
-import ua.com.alevel.hw3.model.TechProductType;
-import ua.com.alevel.hw3.model.WashingMachine;
-import ua.com.alevel.hw3.repository.TechProductRepository;
+import ua.com.alevel.hw2.model.Manufacturer;
+import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.TechProductType;
+import ua.com.alevel.hw2.model.WashingMachine;
+import ua.com.alevel.hw2.repository.TechProductRepository;
 
 import java.util.Optional;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 class TechProductServiceTest {

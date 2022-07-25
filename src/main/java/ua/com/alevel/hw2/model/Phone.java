@@ -3,6 +3,8 @@ package ua.com.alevel.hw2.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class Phone extends TechProduct {
@@ -14,6 +16,22 @@ public class Phone extends TechProduct {
         super(model, manufacturer, count, price);
         this.coreNumbers = coreNumbers;
         this.batteryPower = batteryPower;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+        Phone phone = (Phone) o;
+        return coreNumbers == phone.coreNumbers && batteryPower == phone.batteryPower
+                && id.equals(phone.id) && model.equals(phone.model)
+                && manufacturer == phone.manufacturer && count == phone.count
+                && Double.compare(price, phone.price) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, model, manufacturer, count, price, coreNumbers, batteryPower);
     }
 
     @Override

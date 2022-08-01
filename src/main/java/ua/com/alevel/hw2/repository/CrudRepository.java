@@ -5,17 +5,17 @@ import ua.com.alevel.hw2.model.TechProduct;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository {
+public interface CrudRepository<T extends TechProduct> {
 
-    void save(TechProduct product);
+    void save(T product);
 
-    void saveAll(List<TechProduct> products);
+    void saveAll(List<T> products);
 
-    boolean update(TechProduct product);
+    boolean update(T product);
 
     boolean delete(String id);
 
-    List<TechProduct> getAll();
+    List<T> getAll();
 
-    Optional<TechProduct> findById(String id);
+    Optional<T> findById(String id);
 }

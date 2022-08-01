@@ -1,4 +1,4 @@
-package ua.com.alevel.hw2.service;
+package ua.com.alevel.hw2.factory;
 
 import ua.com.alevel.hw2.model.*;
 

@@ -1,6 +1,7 @@
 package ua.com.alevel.hw2;
 
 import ua.com.alevel.hw2.model.Mouse;
+import ua.com.alevel.hw2.model.Phone;
 import ua.com.alevel.hw2.model.TechProduct;
 import ua.com.alevel.hw2.model.TechProductType;
 import ua.com.alevel.hw2.repository.TechProductRepository;
@@ -8,44 +9,89 @@ import ua.com.alevel.hw2.service.ProductFactory;
 import ua.com.alevel.hw2.service.TechProductService;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 public class Main {
 
     private static final TechProductService PRODUCT_SERVICE = new TechProductService(new TechProductRepository());
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        System.out.println("Create phone, mouse and washing machine objects: ");
-        PRODUCT_SERVICE.createAndSaveProducts(1, TechProductType.PHONE);
-        TechProduct product = ProductFactory.creatProduct(TechProductType.MOUSE);
-        PRODUCT_SERVICE.save(product);
-        PRODUCT_SERVICE.createAndSaveProducts(1, TechProductType.WASHING_MACHINE);
+
+        Random Random = new Random();
+        double price = 980.0;
+        //create
+        TechProduct mouse = ProductFactory.creatProduct(TechProductType.MOUSE);
+        TechProduct phone = ProductFactory.creatProduct(TechProductType.PHONE);
+        TechProduct washingMachine = ProductFactory.creatProduct(TechProductType.WASHING_MACHINE);
+
+        //save
+        PRODUCT_SERVICE.save(mouse);
+        PRODUCT_SERVICE.save(phone);
+        PRODUCT_SERVICE.save(washingMachine);
+
+        //ifPresent
+        System.out.println("\ndeleteProductIfPriceLessThan (ifPresent) method: ");
+        PRODUCT_SERVICE.deleteProductIfPriceLessThan(mouse.getId(), price);
         PRODUCT_SERVICE.getAll();
 
-        System.out.println("\nUpdate mouse object (count, price): ");
+        //orElse
+        System.out.println("\nfindOrReturnDefaultPhone (orElse) method: ");
+        System.out.println("Was found: " + PRODUCT_SERVICE.findOrReturnDefaultPhone(phone.getId()));
+        System.out.println("Default: " + PRODUCT_SERVICE.findOrReturnDefaultPhone("4Au1Eu"));
 
-        String id = product.getId();
-        TechProduct product1 = new Mouse(
-                product.getModel(),
-                product.getManufacturer(),
-                product.getCount(),
-                product.getPrice(),
-                ((Mouse) (product)).getConnectionType(),
-                ((Mouse) (product)).getDpiAmount());
+        //orElseGet
+        System.out.println("\nfindOrSaveDefault (orElseGet) method: ");
+        System.out.println("Was found: " + PRODUCT_SERVICE.findOrSaveDefault(washingMachine.getId()));
+        PRODUCT_SERVICE.findOrSaveDefault("KMBLMLL");
+        System.out.println("Was saved default: ");
+        PRODUCT_SERVICE.getAll();
 
-        product1.setPrice(111.1);
-        product1.setCount(3);
+        //map
+        System.out.println("\ngetStrProdOrDefault (map) method: ");
+        System.out.println("Get string product: " + PRODUCT_SERVICE.getStrProdOrDefault(washingMachine.getId()));
+        System.out.println("Get string default product: " + PRODUCT_SERVICE.getStrProdOrDefault("8HUxpI8c"));
 
-        Field field = product1.getClass().getSuperclass().getDeclaredField("id");
+        //ifPresentOrElse
+        System.out.println("\nupdateOrSaveIfNotExists (ifPresentOrElse) method: ");
+        System.out.println("Before: ");
+        PRODUCT_SERVICE.getAll();
+        TechProduct phone2 = ProductFactory.creatProduct(TechProductType.PHONE);
+        Field field = phone2.getClass().getSuperclass().getDeclaredField("id");
         field.setAccessible(true);
-        field.set(product1, id);
-
-
-        PRODUCT_SERVICE.update(product1);
+        field.set(phone2, phone.getId());
+        PRODUCT_SERVICE.updateOrSaveIfNotExists(phone2);
+        System.out.println("After update (change count, price): ");
+        PRODUCT_SERVICE.getAll();
+        System.out.println("After save: ");
+        PRODUCT_SERVICE.updateOrSaveIfNotExists(ProductFactory.creatProduct(TechProductType.PHONE));
         PRODUCT_SERVICE.getAll();
 
-
-        System.out.println("\nDelete mouse object: ");
-        PRODUCT_SERVICE.delete(id);
+        //filter
+        System.out.println("\ndeleteIfWashingMachineOrThrowException (filter) method: ");
+        System.out.println("delete washing machine by id:");
+        PRODUCT_SERVICE.deleteIfWashingMachineOrThrowException(washingMachine.getId());
         PRODUCT_SERVICE.getAll();
+        System.out.println("throw exception:");
+        try {
+            PRODUCT_SERVICE.deleteIfWashingMachineOrThrowException(phone.getId());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        //orElseThrow
+        System.out.println("\nfindOrThrowException (orElseThrow) method: ");
+        System.out.println("Was found: " + PRODUCT_SERVICE.findOrThrowException(phone.getId()));
+        System.out.print("Throw exception: ");
+        try {
+            PRODUCT_SERVICE.findOrThrowException("aFsWHm");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        //or
+        System.out.println("\ngetProductOrEmpty (or) method: ");
+        System.out.println("Was found: " + PRODUCT_SERVICE.getProductOrEmpty(phone.getId()));
+        System.out.println("Empty: " + PRODUCT_SERVICE.getProductOrEmpty("h4FTph"));
+
     }
 }

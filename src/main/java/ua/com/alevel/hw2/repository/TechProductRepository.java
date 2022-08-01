@@ -29,6 +29,7 @@ public class TechProductRepository implements CrudRepository {
         } else {
             checkDuplicates(product);
             products.add(product);
+            LOGGER.info(product.getClass().getSimpleName() + " {} has been saved", product.getId());
         }
     }
 
@@ -96,6 +97,7 @@ public class TechProductRepository implements CrudRepository {
         while (iterator.hasNext()) {
             final TechProduct product = iterator.next();
             if (product.getId().equals(id)) {
+                LOGGER.info(product.getClass().getSimpleName() + " {} has been removed", product.getId());
                 iterator.remove();
                 return true;
             }

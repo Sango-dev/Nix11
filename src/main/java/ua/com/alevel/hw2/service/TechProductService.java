@@ -2,8 +2,7 @@ package ua.com.alevel.hw2.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.com.alevel.hw2.model.TechProduct;
-import ua.com.alevel.hw2.model.TechProductType;
+import ua.com.alevel.hw2.model.*;
 import ua.com.alevel.hw2.repository.TechProductRepository;
 
 import java.util.LinkedList;
@@ -13,7 +12,6 @@ import java.util.Random;
 
 public class TechProductService {
 
-    private static final Random RANDOM = new Random();
     private static final Logger LOGGER = LoggerFactory.getLogger(TechProductService.class);
     private final TechProductRepository repository;
 
@@ -28,7 +26,6 @@ public class TechProductService {
         List<TechProduct> products = new LinkedList<>();
         for (int i = 0; i < count; i++) {
             products.add(ProductFactory.creatProduct(type));
-            LOGGER.info(type + " {} has been saved", products.get(products.size() - 1).getId());
         }
         repository.saveAll(products);
     }
@@ -38,7 +35,6 @@ public class TechProductService {
             throw new IllegalArgumentException("product cannot be null");
         }
         repository.save(product);
-        LOGGER.info(product.getClass().getSimpleName() + " {} has been saved", product.getId());
     }
 
     public boolean update(TechProduct product) {
@@ -52,11 +48,7 @@ public class TechProductService {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         }
-        boolean flag = repository.delete(id);
-        if (flag) {
-            LOGGER.info("Product {} has been removed", id);
-        }
-        return flag;
+        return repository.delete(id);
     }
 
     public Optional<TechProduct> findById(String id) {
@@ -71,4 +63,70 @@ public class TechProductService {
             System.out.println(products);
         }
     }
+
+    public void deleteProductIfPriceLessThan(String id, double price) {
+        repository.findById(id)
+                .filter(techProduct -> techProduct.getPrice() < price)
+                .ifPresent(deleteTechProduct -> repository.delete(id));
+    }
+
+    public TechProduct findOrReturnDefaultPhone(String id) {
+        return repository.findById(id).orElse(createPhone());
+    }
+
+    public String getStrProdOrDefault(String id) {
+        return repository.findById(id)
+                .map(techProduct -> techProduct.toString())
+                .orElse(createPhone().toString());
+    }
+
+    public TechProduct findOrSaveDefault(String id) {
+        return repository.findById(id)
+                .orElseGet(() -> {
+                    TechProduct techProduct = createPhone();
+                    repository.save(techProduct);
+                    return techProduct;
+                });
+    }
+
+    public TechProduct findOrThrowException(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product with id: " + '"' + id + '"' + " was not found"));
+    }
+
+    public void updateOrSaveIfNotExists(TechProduct techProduct) {
+        repository.findById(techProduct.getId())
+                .ifPresentOrElse(
+                        updProd -> update(techProduct),
+                        () -> repository.save(techProduct)
+                );
+    }
+
+    public Optional<TechProduct> getProductOrEmpty(String id) {
+        return repository.findById(id).or(() -> Optional.empty());
+    }
+
+    public void deleteIfWashingMachineOrThrowException(String id) {
+        repository.findById(id)
+                .filter(product -> product.getClass() == WashingMachine.class)
+                .ifPresentOrElse(
+                        washMachine -> {
+                            repository.delete(id);
+                        },
+                        () -> {
+                            throw new IllegalArgumentException("This product is not washing machine");
+                        }
+                );
+    }
+
+    private Phone createPhone() {
+        Random random = new Random();
+        return new Phone(
+                "Iphone " + random.nextInt(15),
+                Manufacturer.APPLE, random.nextInt(250),
+                5000.9, random.nextInt(20),
+                random.nextInt(10000));
+    }
+
+
 }

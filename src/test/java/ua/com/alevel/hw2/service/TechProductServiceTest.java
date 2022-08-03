@@ -112,4 +112,125 @@ class TechProductServiceTest {
         target.getAll();
         Mockito.verify(repository).getAll();
     }
+
+    @Test
+    void findOrReturnDefaultPhone_found() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        TechProduct techProduct = target.findOrReturnDefaultPhone(washingMachine.getId());
+        Assertions.assertEquals(washingMachine.getId(), techProduct.getId());
+    }
+
+    @Test
+    void findOrReturnDefaultPhone_notFound() {
+        String id = "zLPu";
+        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of(ProductFactory.creatProduct(TechProductType.PHONE)));
+        TechProduct techProduct = target.findOrReturnDefaultPhone(id);
+        Assertions.assertNotEquals(id, techProduct.getId());
+    }
+
+    @Test
+    void deleteProductIfPriceLessThan_less() {
+        double price = 800.1;
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        target.deleteProductIfPriceLessThan(washingMachine.getId(), price);
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(repository).delete(argumentCaptor.capture());
+    }
+
+    @Test
+    void deleteProductIfPriceLessThan_notLess() {
+        double price = 1.1;
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        target.deleteProductIfPriceLessThan(washingMachine.getId(), price);
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(repository, Mockito.times(0)).delete(argumentCaptor.capture());
+    }
+
+    @Test
+    void getStrProdOrDefault_foundProd() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        String res = target.getStrProdOrDefault(washingMachine.getId());
+        Assertions.assertEquals(washingMachine.toString(), res);
+    }
+
+    @Test
+    void getStrProdOrDefault_getDefault() {
+        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of(ProductFactory.creatProduct(TechProductType.PHONE)));
+        String res = target.getStrProdOrDefault(washingMachine.getId());
+        Assertions.assertNotEquals(washingMachine.toString(), res);
+    }
+
+    @Test
+    void findOrSaveDefault_foundProd() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        TechProduct techProduct = target.findOrSaveDefault(washingMachine.getId());
+        Assertions.assertEquals(washingMachine, techProduct);
+    }
+
+    @Test
+    void findOrSaveDefault_saveDefault() {
+        String id = "sBbZd";
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+        target.findOrSaveDefault(id);
+        ArgumentCaptor<TechProduct> argumentCaptor = ArgumentCaptor.forClass(TechProduct.class);
+        Mockito.verify(repository).save(argumentCaptor.capture());
+    }
+
+    @Test
+    void findOrThrowException_found() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        TechProduct techProduct = target.findOrThrowException(washingMachine.getId());
+        Assertions.assertEquals(washingMachine, techProduct);
+    }
+
+    @Test
+    void findOrThrowException_throwExc() {
+        String id = "FpgH5s";
+        Assertions.assertThrows(IllegalArgumentException.class, () -> target.findOrThrowException(id));
+    }
+
+    @Test
+    void updateOrSaveIfNotExists_exist() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        target.updateOrSaveIfNotExists(washingMachine);
+        ArgumentCaptor<TechProduct> argumentCaptor = ArgumentCaptor.forClass(TechProduct.class);
+        Mockito.verify(repository).update(argumentCaptor.capture());
+    }
+
+    @Test
+    void updateOrSaveIfNotExists_notExist() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.empty());
+        target.updateOrSaveIfNotExists(washingMachine);
+        ArgumentCaptor<TechProduct> argumentCaptor = ArgumentCaptor.forClass(TechProduct.class);
+        Mockito.verify(repository).save(argumentCaptor.capture());
+    }
+
+    @Test
+    void getProductOrEmpty_found() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        Optional<TechProduct> techProduct = target.getProductOrEmpty(washingMachine.getId());
+        Assertions.assertEquals(washingMachine, techProduct.get());
+    }
+
+    @Test
+    void getProductOrEmpty_notFound() {
+        String id = "RO73v0R";
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+        Optional<TechProduct> techProduct = target.getProductOrEmpty(id);
+        Assertions.assertFalse(techProduct.isPresent());
+    }
+
+    @Test
+    void deleteIfWashingMachineOrThrowException_ifWashingMachine() {
+        Mockito.when(repository.findById(washingMachine.getId())).thenReturn(Optional.of(washingMachine));
+        target.deleteIfWashingMachineOrThrowException(washingMachine.getId());
+        Mockito.verify(repository).delete(washingMachine.getId());
+    }
+
+    @Test
+    void deleteIfWashingMachineOrThrowException_throwExc() {
+        String id = "u4Mb";
+        Assertions.assertThrows(IllegalArgumentException.class, () -> target.deleteIfWashingMachineOrThrowException(id));
+    }
+
 }

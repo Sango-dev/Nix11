@@ -26,7 +26,7 @@ class PhoneServiceTest {
     void setUp() {
         repository = mock(PhoneRepository.class);
         target = new PhoneService(repository);
-        phone = (Phone) ProductFactory.creatProduct(TechProductType.PHONE);
+        phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 
     @Test

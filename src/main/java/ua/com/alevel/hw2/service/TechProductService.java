@@ -28,7 +28,7 @@ public abstract class TechProductService<T extends TechProduct> {
         }
         List<T> products = new LinkedList<>();
         for (int i = 0; i < count; i++) {
-            products.add((T) ProductFactory.creatProduct(type));
+            products.add((T) ProductFactory.createProduct(type));
         }
         repository.saveAll(products);
     }

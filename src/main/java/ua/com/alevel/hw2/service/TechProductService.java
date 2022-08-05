@@ -14,7 +14,6 @@ import java.util.Random;
 
 public abstract class TechProductService<T extends TechProduct> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TechProductService.class);
     private final CrudRepository<T> repository;
     protected static final Random RANDOM = new Random();
 
@@ -41,9 +40,9 @@ public abstract class TechProductService<T extends TechProduct> {
         }
     }
 
-    public boolean update(T product) {
+    public boolean update(TechProduct product) {
         if (product != null) {
-            return repository.update(product);
+            return repository.update((T) product);
         } else {
             throw new IllegalArgumentException("product cannot be null");
         }

@@ -10,8 +10,6 @@ import ua.com.alevel.hw2.model.TechProductType;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PhoneRepositoryTest {
 
     private PhoneRepository target;
@@ -22,7 +20,7 @@ class PhoneRepositoryTest {
     void setUp() {
         target = new PhoneRepository();
         final Random random = new Random();
-        phone = (Phone) ProductFactory.creatProduct(TechProductType.PHONE);
+        phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 
     @Test
@@ -61,7 +59,7 @@ class PhoneRepositoryTest {
 
     @Test
     void saveAll_manyPhone() {
-        final Phone otherPhone = (Phone) ProductFactory.creatProduct(TechProductType.PHONE);
+        final Phone otherPhone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
         target.saveAll(List.of(phone, otherPhone));
         final List<Phone> phones = target.getAll();
         Assertions.assertEquals(2, phones.size());

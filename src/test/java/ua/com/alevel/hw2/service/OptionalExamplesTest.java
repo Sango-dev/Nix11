@@ -12,7 +12,6 @@ import ua.com.alevel.hw2.repository.PhoneRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class OptionalExamplesTest {
@@ -25,7 +24,7 @@ class OptionalExamplesTest {
     void setUp() {
         repository = mock(PhoneRepository.class);
         target = new OptionalExamples(repository);
-        phone = (Phone) ProductFactory.creatProduct(TechProductType.PHONE);
+        phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 
     @Test
@@ -38,7 +37,7 @@ class OptionalExamplesTest {
     @Test
     void findOrReturnDefaultPhone_notFound() {
         String id = "zLPu";
-        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of((Phone) ProductFactory.creatProduct(TechProductType.PHONE)));
+        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of((Phone) ProductFactory.createProduct(TechProductType.PHONE)));
         Phone retPhone = target.findOrReturnDefaultPhone(id);
         Assertions.assertNotEquals(id, retPhone.getId());
     }
@@ -70,7 +69,7 @@ class OptionalExamplesTest {
 
     @Test
     void getStrPhoneOrDefault_getDefault() {
-        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of((Phone) ProductFactory.creatProduct(TechProductType.PHONE)));
+        Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.of((Phone) ProductFactory.createProduct(TechProductType.PHONE)));
         String res = target.getStrPhoneOrDefault(phone.getId());
         Assertions.assertNotEquals(phone.toString(), res);
     }

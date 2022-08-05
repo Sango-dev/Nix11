@@ -11,7 +11,7 @@ public class ProductFactory {
     private ProductFactory() {
     }
 
-    public static TechProduct creatProduct(TechProductType type) {
+    public static TechProduct createProduct(TechProductType type) {
         return switch (type) {
             case WASHING_MACHINE -> new WashingMachine(
                     "Model-" + RANDOM.nextInt(200),

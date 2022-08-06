@@ -7,15 +7,18 @@ import ua.com.alevel.hw2.model.TechProduct;
 import ua.com.alevel.hw2.model.TechProductType;
 import ua.com.alevel.hw2.repository.CrudRepository;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public abstract class TechProductService<T extends TechProduct> {
 
     private final CrudRepository<T> repository;
     protected static final Random RANDOM = new Random();
+
+    private final Predicate<Collection<T>> predicate = products -> products.stream().allMatch(product -> product.getPrice() !=0);
+    private final Function<Map<String, Object>, T> function = this::createProductFromMapImpl;
 
     protected TechProductService(CrudRepository<T> repository) {
         this.repository = repository;
@@ -74,5 +77,42 @@ public abstract class TechProductService<T extends TechProduct> {
         }
     }
 
+    public void findProductsMoreExpensive(double price) {
+        repository.getAll()
+                .stream()
+                .filter(product -> product.getPrice() > price)
+                .forEach(System.out::println);
+    }
 
+    public double calculatePrice() {
+        return repository.getAll()
+                .stream()
+                .map(TechProduct::getPrice)
+                .reduce(0.0, Double::sum);
+    }
+
+    public Map<String, String> sortedOfModelDistinctsProductsToMap() {
+        return repository.getAll()
+                .stream()
+                .sorted(Comparator.comparing(TechProduct::getModel))
+                .distinct()
+                .collect(Collectors.toMap(TechProduct::getId, TechProduct::toString, (p1, p2) -> p2));
+    }
+
+    public DoubleSummaryStatistics getSummaryPriceStatistics() {
+        return repository.getAll()
+                .stream()
+                .mapToDouble(TechProduct::getPrice)
+                .summaryStatistics();
+    }
+
+    public boolean isAllProductsHavePrice() {
+        return predicate.test(repository.getAll());
+    }
+
+    public T createProductFromMap(Map<String, Object> map) {
+        return function.apply(map);
+    }
+
+    public abstract T createProductFromMapImpl(Map<String, Object> map);
 }

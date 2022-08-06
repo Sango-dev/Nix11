@@ -3,6 +3,8 @@ package ua.com.alevel.hw2.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -11,11 +13,20 @@ public class Phone extends TechProduct {
 
     private final int coreNumbers;
     private final int batteryPower;
+    private List<String> details;
 
     public Phone(String model, Manufacturer manufacturer, int count, double price, int coreNumbers, int batteryPower) {
         super(model, manufacturer, count, price);
         this.coreNumbers = coreNumbers;
         this.batteryPower = batteryPower;
+        this.details = Collections.emptyList();
+    }
+
+    public Phone(String model, Manufacturer manufacturer, int count, double price, int coreNumbers, int batteryPower, List<String> details) {
+        super(model, manufacturer, count, price);
+        this.coreNumbers = coreNumbers;
+        this.batteryPower = batteryPower;
+        this.details = details;
     }
 
     @Override

@@ -9,17 +9,26 @@ import java.util.Map;
 
 public class PhoneService extends TechProductService<Phone> {
 
-    public PhoneService(CrudRepository<Phone> repository) {
-        super(repository);
-    }
-
     private static PhoneService instance;
+
+    private final PhoneRepository repository;
+
+    private PhoneService(final PhoneRepository repository) {
+        super(repository);
+        this.repository = repository;
+    }
 
     public static PhoneService getInstance() {
         if (instance == null) {
-            instance = new PhoneService(new PhoneRepository());
+            instance = new PhoneService(PhoneRepository.getInstance());
         }
+        return instance;
+    }
 
+    public static PhoneService getInstance(final PhoneRepository repository) {
+        if (instance == null) {
+            instance = new PhoneService(repository);
+        }
         return instance;
     }
 

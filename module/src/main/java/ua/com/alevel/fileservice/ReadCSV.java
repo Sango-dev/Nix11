@@ -29,7 +29,7 @@ public final class ReadCSV {
             line = reader.readLine();
             boolean flag = getMapOfNames(line);
             if (!flag) {
-                new IncorrectEnterString("Wrong headers!!!");
+                throw new IncorrectEnterString("Wrong headers!!!");
             }
 
             while ((line = reader.readLine()) != null) {

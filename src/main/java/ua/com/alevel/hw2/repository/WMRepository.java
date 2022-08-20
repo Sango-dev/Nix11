@@ -11,8 +11,17 @@ public class WMRepository implements CrudRepository<WashingMachine> {
     private static final Logger LOGGER = LoggerFactory.getLogger(WMRepository.class);
     private final List<WashingMachine> machines;
 
-    public WMRepository() {
+    private static WMRepository instance;
+
+    private WMRepository() {
         machines = new LinkedList<>();
+    }
+
+    public static WMRepository getInstance() {
+        if (instance == null) {
+            instance = new WMRepository();
+        }
+        return instance;
     }
 
     @Override

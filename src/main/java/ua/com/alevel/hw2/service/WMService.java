@@ -17,7 +17,7 @@ public class WMService extends TechProductService<WashingMachine> {
 
     public static WMService getInstance() {
         if (instance == null) {
-            instance = new WMService(new WMRepository());
+            instance = new WMService(WMRepository.getInstance());
         }
         return instance;
     }

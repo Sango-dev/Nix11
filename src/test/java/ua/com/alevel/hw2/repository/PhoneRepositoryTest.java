@@ -11,14 +11,14 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 class PhoneRepositoryTest {
-/*
+
     private PhoneRepository target;
 
     private Phone phone;
 
     @BeforeEach
     void setUp() {
-        target = new PhoneRepository();
+        target = PhoneRepository.getInstance();
         final Random random = new Random();
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
@@ -158,5 +158,4 @@ class PhoneRepositoryTest {
         final List<Phone> actualResult = target.getAll();
         Assertions.assertEquals(0, actualResult.size());
     }
- */
 }

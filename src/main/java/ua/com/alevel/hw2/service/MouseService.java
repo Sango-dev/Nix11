@@ -5,6 +5,7 @@ import ua.com.alevel.hw2.model.Manufacturer;
 import ua.com.alevel.hw2.model.Mouse;
 import ua.com.alevel.hw2.repository.CrudRepository;
 import ua.com.alevel.hw2.repository.MouseRepository;
+import ua.com.alevel.hw2.repository.PhoneRepository;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class MouseService extends TechProductService<Mouse> {
 
     public static MouseService getInstance() {
         if (instance == null) {
-            instance = new MouseService(new MouseRepository());
+            instance = new MouseService(MouseRepository.getInstance());
         }
         return instance;
     }

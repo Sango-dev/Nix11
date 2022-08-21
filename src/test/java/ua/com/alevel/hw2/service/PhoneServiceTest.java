@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 class PhoneServiceTest {
-/*
+
     private PhoneService target;
     private PhoneRepository repository;
     private Phone phone;
@@ -25,7 +25,7 @@ class PhoneServiceTest {
     @BeforeEach
     void setUp() {
         repository = mock(PhoneRepository.class);
-        target = new PhoneService(repository);
+        target = PhoneService.getInstance(repository);
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 
@@ -103,6 +103,4 @@ class PhoneServiceTest {
         target.getAll();
         Mockito.verify(repository).getAll();
     }
-
- */
 }

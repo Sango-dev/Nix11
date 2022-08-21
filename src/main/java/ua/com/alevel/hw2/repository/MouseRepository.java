@@ -11,8 +11,17 @@ public class MouseRepository implements CrudRepository<Mouse> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MouseRepository.class);
     private final List<Mouse> mice;
 
-    public MouseRepository() {
-        mice = new LinkedList<>();
+    private static MouseRepository instance;
+
+    private MouseRepository() {
+        mice= new LinkedList<>();
+    }
+
+    public static MouseRepository getInstance() {
+        if (instance == null) {
+            instance = new MouseRepository();
+        }
+        return instance;
     }
 
     @Override

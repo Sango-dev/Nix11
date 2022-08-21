@@ -9,10 +9,26 @@ import java.util.Random;
 
 public class OptionalExamples {
 
+    private static OptionalExamples instance;
+
     private final PhoneRepository repository;
 
-    public OptionalExamples(PhoneRepository repository) {
+    private OptionalExamples(final PhoneRepository repository) {
         this.repository = repository;
+    }
+
+    public static OptionalExamples getInstance() {
+        if (instance == null) {
+            instance = new OptionalExamples(PhoneRepository.getInstance());
+        }
+        return instance;
+    }
+
+    public static OptionalExamples getInstance(final PhoneRepository repository) {
+        if (instance == null) {
+            instance = new OptionalExamples(repository);
+        }
+        return instance;
     }
 
     public Phone findOrReturnDefaultPhone(String id) {

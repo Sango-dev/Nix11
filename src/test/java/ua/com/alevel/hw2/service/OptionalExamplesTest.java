@@ -23,7 +23,7 @@ class OptionalExamplesTest {
     @BeforeEach
     void setUp() {
         repository = mock(PhoneRepository.class);
-        target = new OptionalExamples(repository);
+        target = OptionalExamples.getInstance(repository);
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 

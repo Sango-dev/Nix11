@@ -43,7 +43,7 @@ public class OptionalExamples {
 
     public String getStrPhoneOrDefault(String id) {
         return repository.findById(id)
-                .map(phone -> phone.toString())
+                .map(Phone::toString)
                 .orElse(createPhone().toString());
     }
 

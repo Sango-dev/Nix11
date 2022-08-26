@@ -1,6 +1,7 @@
 package ua.com.alevel.hw2.repository;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ua.com.alevel.hw2.factory.ProductFactory;
@@ -12,13 +13,13 @@ import java.util.*;
 
 class PhoneRepositoryTest {
 
-    private PhoneRepository target;
+    private static PhoneRepository target;
 
     private Phone phone;
 
     @BeforeEach
     void setUp() {
-        target = PhoneRepository.getInstance();
+        target = PhoneRepository.initializeAndGetInstance();
         final Random random = new Random();
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }

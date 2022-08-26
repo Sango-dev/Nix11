@@ -1,18 +1,18 @@
 package ua.com.alevel.hw2.commands;
 
 import ua.com.alevel.hw2.model.*;
-import ua.com.alevel.hw2.repository.MouseRepository;
-import ua.com.alevel.hw2.repository.PhoneRepository;
-import ua.com.alevel.hw2.repository.WMRepository;
 import ua.com.alevel.hw2.service.MouseService;
 import ua.com.alevel.hw2.service.PhoneService;
 import ua.com.alevel.hw2.service.TechProductService;
 import ua.com.alevel.hw2.service.WMService;
+import ua.com.alevel.hw2.util.UtilInputUser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Update implements Command{
 
@@ -25,8 +25,11 @@ public class Update implements Command{
     public void execute() {
         System.out.print("\nUpdate (choose type of product):");
         TechProductType[] types = TechProductType.values();
-        List<String> names = UtilEnumList.getTypesName(types);
-        int userInput = UtilUser.inputData(types.length, names);
+        List<String> names= Arrays.stream(types)
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
+        final int userInput = UtilInputUser.getUserInput(names);
         switch (types[userInput]) {
             case PHONE -> update(PHONE_SERVICE);
             case MOUSE -> update(MOUSE_SERVICE);

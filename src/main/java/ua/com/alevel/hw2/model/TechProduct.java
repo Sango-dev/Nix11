@@ -10,10 +10,14 @@ import java.util.UUID;
 public abstract class TechProduct {
 
     protected final String id;
-    protected final String model;
-    protected final Manufacturer manufacturer;
+    protected String model;
+    protected Manufacturer manufacturer;
     protected int count;
     protected double price;
+
+    public TechProduct() {
+        id = UUID.randomUUID().toString();
+    }
 
     public TechProduct(String model, Manufacturer manufacturer, int count, double price) {
         id = UUID.randomUUID().toString();

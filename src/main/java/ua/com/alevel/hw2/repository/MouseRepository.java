@@ -51,22 +51,13 @@ public class MouseRepository implements CrudRepository<Mouse> {
             return false;
         }
         final Mouse originMouse = result.get();
-        MouseRepository.MouseCopy.copy(originMouse, mouse);
+        MouseCopy.copy(originMouse, mouse);
         return true;
     }
 
     @Override
     public boolean delete(String id) {
-        final Iterator<Mouse> iterator = mice.iterator();
-        while (iterator.hasNext()) {
-            final Mouse mouse = iterator.next();
-            if (mouse.getId().equals(id)) {
-                LOGGER.info(mouse.getClass().getSimpleName() + " {} has been removed", mouse.getId());
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return mice.removeIf(mouse -> mouse.getId().equals(id));
     }
 
     @Override
@@ -79,13 +70,9 @@ public class MouseRepository implements CrudRepository<Mouse> {
 
     @Override
     public Optional<Mouse> findById(String id) {
-        Mouse result = null;
-        for (Mouse mouse : mice) {
-            if (mouse.getId().equals(id)) {
-                result = mouse;
-            }
-        }
-        return Optional.ofNullable(result);
+        return mice.stream()
+                .filter(mouse -> mouse.getId().equals(id))
+                .findAny();
     }
 
     private static class MouseCopy {

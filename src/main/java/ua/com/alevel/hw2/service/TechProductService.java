@@ -72,9 +72,9 @@ public abstract class TechProductService<T extends TechProduct> {
     }
 
     public void printAll() {
-        for (T product : repository.getAll()) {
-            System.out.println(product);
-        }
+        repository.getAll()
+                .stream()
+                .forEach(System.out::println);
     }
 
     public void findProductsMoreExpensive(double price) {
@@ -115,4 +115,5 @@ public abstract class TechProductService<T extends TechProduct> {
     }
 
     public abstract T createProductFromMapImpl(Map<String, Object> map);
+
 }

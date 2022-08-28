@@ -9,8 +9,11 @@ import ua.com.alevel.hw2.service.MouseService;
 import ua.com.alevel.hw2.service.PhoneService;
 import ua.com.alevel.hw2.service.TechProductService;
 import ua.com.alevel.hw2.service.WMService;
+import ua.com.alevel.hw2.util.UtilInputUser;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Create implements Command {
     private static final TechProductService<Phone> PHONE_SERVICE = PhoneService.getInstance();
@@ -20,9 +23,12 @@ public class Create implements Command {
     @Override
     public void execute() {
         System.out.print("\nCreate and store (choose type of product):");
-        TechProductType[] types = TechProductType.values();
-        List<String> names = UtilEnumList.getTypesName(types);
-        int userInput = UtilUser.inputData(types.length, names);
+        final TechProductType[] types = TechProductType.values();
+        List<String> names = Arrays.stream(types)
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
+        final int userInput = UtilInputUser.getUserInput(names);
         switch (types[userInput]) {
             case PHONE -> PHONE_SERVICE.save((Phone) ProductFactory.createProduct(TechProductType.PHONE));
             case MOUSE -> MOUSE_SERVICE.save((Mouse) ProductFactory.createProduct(TechProductType.MOUSE));

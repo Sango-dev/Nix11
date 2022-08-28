@@ -1,6 +1,7 @@
 package ua.com.alevel.hw2.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,14 +17,19 @@ import static org.mockito.Mockito.mock;
 
 class OptionalExamplesTest {
 
-    private OptionalExamples target;
-    private PhoneRepository repository;
+    private static OptionalExamples target;
+    private static PhoneRepository repository;
     private Phone phone;
+
+    @BeforeAll
+    static void beforeAll() {
+        repository = mock(PhoneRepository.class);
+        target = OptionalExamples.getInstance(repository);
+    }
 
     @BeforeEach
     void setUp() {
-        repository = mock(PhoneRepository.class);
-        target = OptionalExamples.getInstance(repository);
+        Mockito.reset(repository);
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 

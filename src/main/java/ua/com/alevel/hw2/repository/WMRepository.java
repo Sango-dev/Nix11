@@ -51,22 +51,13 @@ public class WMRepository implements CrudRepository<WashingMachine> {
             return false;
         }
         final WashingMachine originMachine = result.get();
-        WMRepository.WMCopy.copy(originMachine, machine);
+        WMCopy.copy(originMachine, machine);
         return true;
     }
 
     @Override
     public boolean delete(String id) {
-        final Iterator<WashingMachine> iterator = machines.iterator();
-        while (iterator.hasNext()) {
-            final WashingMachine machine = iterator.next();
-            if (machine.getId().equals(id)) {
-                LOGGER.info(machine.getClass().getSimpleName() + " {} has been removed", machine.getId());
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return machines.removeIf(machine -> machine.getId().equals(id));
     }
 
     @Override
@@ -79,13 +70,9 @@ public class WMRepository implements CrudRepository<WashingMachine> {
 
     @Override
     public Optional<WashingMachine> findById(String id) {
-        WashingMachine result = null;
-        for (WashingMachine machine : machines) {
-            if (machine.getId().equals(id)) {
-                result = machine;
-            }
-        }
-        return Optional.ofNullable(result);
+        return machines.stream()
+                .filter(machine -> machine.getId().equals(id))
+                .findAny();
     }
 
     private static class WMCopy {

@@ -19,11 +19,11 @@ public enum Commands {
         this.command = command;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Command getCommand() {
-        return command;
+    public boolean execute() {
+        if (command == null) {
+            return false;
+        }
+        command.execute();
+        return true;
     }
 }

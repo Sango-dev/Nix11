@@ -9,8 +9,10 @@ import java.util.Objects;
 @Setter
 public class Mouse extends TechProduct {
 
-    private final ConnectionType connectionType;
-    private final int dpiAmount;
+    private ConnectionType connectionType;
+    private int dpiAmount;
+
+    private Mouse() {}
 
     public Mouse(String model, Manufacturer manufacturer, int count, double price, ConnectionType connectionType, int dpiAmount) {
         super(model, manufacturer, count, price);
@@ -45,5 +47,45 @@ public class Mouse extends TechProduct {
                 ", count=" + count +
                 ", price=" + price +
                 '}';
+    }
+
+    public static class Builder{
+        private Mouse mouse;
+
+        public Builder(ConnectionType connectionType, double price) {
+            mouse = new Mouse();
+            mouse.setConnectionType(connectionType);
+            mouse.setPrice(price);
+        }
+
+        public Builder setModel(String model) {
+            if (model.length() <= 20) {
+                mouse.setModel(model);
+                return this;
+            }
+            throw new IllegalArgumentException("Model length must be not greater than 20");
+        }
+
+        public Builder setManufacturer(Manufacturer manufacturer) {
+            mouse.setManufacturer(manufacturer);
+            return this;
+        }
+
+        public Builder setCount(int count) {
+            if (count > 0) {
+                mouse.setCount(count);
+                return this;
+            }
+            throw new IllegalArgumentException("Count must be greater than zero");
+        }
+
+        public Builder setDpiAmount(int dpiAmount) {
+            mouse.setDpiAmount(dpiAmount);
+            return this;
+        }
+
+        public Mouse build() {
+            return mouse;
+        }
     }
 }

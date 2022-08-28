@@ -24,6 +24,11 @@ public class PhoneRepository implements CrudRepository<Phone> {
         return instance;
     }
 
+    public static PhoneRepository initializeAndGetInstance() {
+        instance = new PhoneRepository();
+        return instance;
+    }
+
     @Override
     public void save(Phone phone) {
         if (phone == null) {
@@ -51,22 +56,13 @@ public class PhoneRepository implements CrudRepository<Phone> {
             return false;
         }
         final Phone originPhone = result.get();
-        PhoneRepository.PhoneCopy.copy(originPhone, phone);
+        PhoneCopy.copy(originPhone, phone);
         return true;
     }
 
     @Override
     public boolean delete(String id) {
-        final Iterator<Phone> iterator = phones.iterator();
-        while (iterator.hasNext()) {
-            final Phone phone = iterator.next();
-            if (phone.getId().equals(id)) {
-                LOGGER.info(phone.getClass().getSimpleName() + " {} has been removed", phone.getId());
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        return phones.removeIf(phone -> phone.getId().equals(id));
     }
 
     @Override
@@ -79,13 +75,9 @@ public class PhoneRepository implements CrudRepository<Phone> {
 
     @Override
     public Optional<Phone> findById(String id) {
-        Phone result = null;
-        for (Phone phone : phones) {
-            if (phone.getId().equals(id)) {
-                result = phone;
-            }
-        }
-        return Optional.ofNullable(result);
+        return phones.stream()
+                .filter(phone -> phone.getId().equals(id))
+                .findAny();
     }
 
     private static class PhoneCopy {

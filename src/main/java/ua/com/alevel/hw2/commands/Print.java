@@ -1,15 +1,15 @@
 package ua.com.alevel.hw2.commands;
 
 import ua.com.alevel.hw2.model.*;
-import ua.com.alevel.hw2.repository.MouseRepository;
-import ua.com.alevel.hw2.repository.PhoneRepository;
-import ua.com.alevel.hw2.repository.WMRepository;
 import ua.com.alevel.hw2.service.MouseService;
 import ua.com.alevel.hw2.service.PhoneService;
 import ua.com.alevel.hw2.service.TechProductService;
 import ua.com.alevel.hw2.service.WMService;
+import ua.com.alevel.hw2.util.UtilInputUser;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Print implements Command{
 
@@ -21,8 +21,11 @@ public class Print implements Command{
     public void execute() {
         System.out.print("\nShow (choose type of product):");
         TechProductType[] types = TechProductType.values();
-        List<String> names = UtilEnumList.getTypesName(types);
-        int userInput = UtilUser.inputData(types.length, names);
+        List<String> names = Arrays.stream(types)
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
+        final int userInput = UtilInputUser.getUserInput(names);
         switch (types[userInput]) {
             case PHONE -> show(PHONE_SERVICE);
             case MOUSE -> show(MOUSE_SERVICE);

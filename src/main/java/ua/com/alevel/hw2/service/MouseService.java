@@ -1,21 +1,23 @@
 package ua.com.alevel.hw2.service;
 
+import ua.com.alevel.hw2.annotation.Autowired;
+import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.model.ConnectionType;
 import ua.com.alevel.hw2.model.Manufacturer;
 import ua.com.alevel.hw2.model.Mouse;
 import ua.com.alevel.hw2.repository.CrudRepository;
 import ua.com.alevel.hw2.repository.MouseRepository;
-import ua.com.alevel.hw2.repository.PhoneRepository;
 
 import java.util.Map;
 
+@Singleton
 public class MouseService extends TechProductService<Mouse> {
+    private static MouseService instance;
 
-    public MouseService(CrudRepository<Mouse> repository) {
+    @Autowired
+    private MouseService(final MouseRepository repository) {
         super(repository);
     }
-
-    private static MouseService instance;
 
     public static MouseService getInstance() {
         if (instance == null) {

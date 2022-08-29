@@ -1,5 +1,6 @@
 package ua.com.alevel.hw2.service;
 
+import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.model.Manufacturer;
 import ua.com.alevel.hw2.model.Phone;
 import ua.com.alevel.hw2.repository.PhoneRepository;

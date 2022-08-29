@@ -1,5 +1,7 @@
 package ua.com.alevel.hw2.util;
 
+import ua.com.alevel.hw2.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,7 +10,8 @@ import java.util.List;
 public final class UtilInputUser {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    private UtilInputUser() {}
+    private UtilInputUser() {
+    }
 
     public static int getUserInput(List<String> names) {
         int userType = -1;

@@ -2,10 +2,13 @@ package ua.com.alevel.hw2.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.com.alevel.hw2.annotation.Autowired;
+import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.model.Mouse;
 
 import java.util.*;
 
+@Singleton
 public class MouseRepository implements CrudRepository<Mouse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MouseRepository.class);
@@ -13,6 +16,7 @@ public class MouseRepository implements CrudRepository<Mouse> {
 
     private static MouseRepository instance;
 
+    @Autowired
     private MouseRepository() {
         mice= new LinkedList<>();
     }

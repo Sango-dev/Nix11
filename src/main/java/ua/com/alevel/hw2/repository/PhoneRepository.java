@@ -2,10 +2,13 @@ package ua.com.alevel.hw2.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.com.alevel.hw2.annotation.Autowired;
+import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.model.Phone;
 
 import java.util.*;
 
+@Singleton
 public class PhoneRepository implements CrudRepository<Phone> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PhoneRepository.class);
@@ -13,6 +16,7 @@ public class PhoneRepository implements CrudRepository<Phone> {
 
     private static PhoneRepository instance;
 
+    @Autowired
     private PhoneRepository() {
         phones = new LinkedList<>();
     }

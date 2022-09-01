@@ -1,5 +1,7 @@
 package ua.com.alevel.hw2.service;
 
+import ua.com.alevel.hw2.annotation.Autowired;
+import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.model.Manufacturer;
 import ua.com.alevel.hw2.model.Phone;
 import ua.com.alevel.hw2.repository.CrudRepository;
@@ -7,12 +9,14 @@ import ua.com.alevel.hw2.repository.PhoneRepository;
 
 import java.util.Map;
 
+@Singleton
 public class PhoneService extends TechProductService<Phone> {
 
     private static PhoneService instance;
 
     private final PhoneRepository repository;
 
+    @Autowired
     private PhoneService(final PhoneRepository repository) {
         super(repository);
         this.repository = repository;

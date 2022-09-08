@@ -1,6 +1,6 @@
 package ua.com.alevel.hw2.container;
 
-import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.product.TechProduct;
 
 import java.util.Random;
 

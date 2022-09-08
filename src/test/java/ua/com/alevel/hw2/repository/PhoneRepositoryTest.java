@@ -1,12 +1,11 @@
 package ua.com.alevel.hw2.repository;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ua.com.alevel.hw2.factory.ProductFactory;
-import ua.com.alevel.hw2.model.Phone;
-import ua.com.alevel.hw2.model.TechProductType;
+import ua.com.alevel.hw2.model.product.Phone;
+import ua.com.alevel.hw2.model.product.TechProductType;
 
 import java.lang.reflect.Field;
 import java.util.*;

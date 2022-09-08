@@ -1,4 +1,4 @@
-package ua.com.alevel.hw2.model;
+package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +27,13 @@ public class Phone extends TechProduct {
         this.coreNumbers = coreNumbers;
         this.batteryPower = batteryPower;
         this.details = details;
+    }
+
+    public Phone(String id, String model, Manufacturer manufacturer, int count, double price, int coreNumbers, int batteryPower) {
+        super(id, model, manufacturer, count, price);
+        this.coreNumbers = coreNumbers;
+        this.batteryPower = batteryPower;
+        this.details = Collections.emptyList();
     }
 
     @Override

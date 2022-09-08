@@ -3,7 +3,7 @@ package ua.com.alevel.hw2.tree;
 import lombok.Getter;
 import lombok.Setter;
 import ua.com.alevel.hw2.comparator.CustomComparator;
-import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.product.TechProduct;
 
 @Getter
 public class BSTree<T extends TechProduct> {

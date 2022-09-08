@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.com.alevel.hw2.model.TechProduct;
+import ua.com.alevel.hw2.model.product.TechProduct;
 
 import java.util.*;
 import java.util.function.Consumer;

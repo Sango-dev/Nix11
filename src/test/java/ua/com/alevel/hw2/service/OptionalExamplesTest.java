@@ -7,9 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import ua.com.alevel.hw2.factory.ProductFactory;
-import ua.com.alevel.hw2.model.Phone;
-import ua.com.alevel.hw2.model.TechProductType;
+import ua.com.alevel.hw2.model.product.Phone;
+import ua.com.alevel.hw2.model.product.TechProductType;
 import ua.com.alevel.hw2.repository.PhoneRepository;
+import ua.com.alevel.hw2.service.productservice.OptionalExamples;
 
 import java.util.Optional;
 

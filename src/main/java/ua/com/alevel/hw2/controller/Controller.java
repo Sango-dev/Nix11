@@ -21,7 +21,7 @@ public final class Controller {
     private static boolean chooseAction(Commands[] commands) {
         System.out.println("\nChoose action:");
         final List<String> names = Arrays.stream(commands)
-                .map(Enum::name)
+                .map(command -> command.getName())
                 .collect(Collectors.toList());
 
         final int userInput = UtilInputUser.getUserInput(names);

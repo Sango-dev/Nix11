@@ -1,6 +1,8 @@
-package ua.com.alevel.hw2.model;
+package ua.com.alevel.hw2.model.phonebox;
 
 import lombok.Setter;
+import ua.com.alevel.hw2.model.product.Manufacturer;
+import ua.com.alevel.hw2.model.product.OperatingSystem;
 
 import java.util.Date;
 

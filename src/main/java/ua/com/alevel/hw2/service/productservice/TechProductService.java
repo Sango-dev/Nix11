@@ -1,11 +1,9 @@
-package ua.com.alevel.hw2.service;
+package ua.com.alevel.hw2.service.productservice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.factory.ProductFactory;
-import ua.com.alevel.hw2.model.TechProduct;
-import ua.com.alevel.hw2.model.TechProductType;
-import ua.com.alevel.hw2.repository.CrudRepository;
+import ua.com.alevel.hw2.model.product.TechProduct;
+import ua.com.alevel.hw2.model.product.TechProductType;
 
 import java.util.*;
 import java.util.function.Function;
@@ -14,13 +12,13 @@ import java.util.stream.Collectors;
 
 public abstract class TechProductService<T extends TechProduct> {
 
-    private final CrudRepository<T> repository;
+    private final IProductDao<T> repository;
     protected static final Random RANDOM = new Random();
 
-    private final Predicate<Collection<T>> predicate = products -> products.stream().allMatch(product -> product.getPrice() !=0);
+    private final Predicate<Collection<T>> predicate = products -> products.stream().allMatch(product -> product.getPrice() != 0);
     private final Function<Map<String, Object>, T> function = this::createProductFromMapImpl;
 
-    protected TechProductService(CrudRepository<T> repository) {
+    protected TechProductService(IProductDao<T> repository) {
         this.repository = repository;
     }
 
@@ -62,6 +60,14 @@ public abstract class TechProductService<T extends TechProduct> {
     public Optional<T> findById(String id) {
         if (id != null) {
             return repository.findById(id);
+        } else {
+            throw new IllegalArgumentException("id cannot be null");
+        }
+    }
+
+    public boolean checkNullForeignInvoiceID(String id) {
+        if (id != null) {
+            return repository.checkNullForeignInvoiceID(id);
         } else {
             throw new IllegalArgumentException("id cannot be null");
         }

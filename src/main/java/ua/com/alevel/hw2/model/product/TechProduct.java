@@ -1,4 +1,4 @@
-package ua.com.alevel.hw2.model;
+package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +21,14 @@ public abstract class TechProduct {
 
     public TechProduct(String model, Manufacturer manufacturer, int count, double price) {
         id = UUID.randomUUID().toString();
+        this.model = model;
+        this.manufacturer = manufacturer;
+        this.count = count;
+        this.price = price;
+    }
+
+    public TechProduct(String id, String model, Manufacturer manufacturer, int count, double price) {
+        this.id = id;
         this.model = model;
         this.manufacturer = manufacturer;
         this.count = count;

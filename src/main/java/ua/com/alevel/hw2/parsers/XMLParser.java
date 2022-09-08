@@ -1,8 +1,8 @@
 package ua.com.alevel.hw2.parsers;
 
-import ua.com.alevel.hw2.model.Manufacturer;
-import ua.com.alevel.hw2.model.OperatingSystem;
-import ua.com.alevel.hw2.model.PhoneBox;
+import ua.com.alevel.hw2.model.product.Manufacturer;
+import ua.com.alevel.hw2.model.product.OperatingSystem;
+import ua.com.alevel.hw2.model.phonebox.PhoneBox;
 import ua.com.alevel.hw2.readfromfile.ReadFile;
 
 import java.lang.reflect.Field;

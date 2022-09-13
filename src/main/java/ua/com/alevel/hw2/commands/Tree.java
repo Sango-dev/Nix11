@@ -2,18 +2,10 @@ package ua.com.alevel.hw2.commands;
 
 import ua.com.alevel.hw2.comparator.CustomComparator;
 import ua.com.alevel.hw2.factory.ProductFactory;
-import ua.com.alevel.hw2.model.*;
-import ua.com.alevel.hw2.repository.MouseRepository;
-import ua.com.alevel.hw2.repository.PhoneRepository;
-import ua.com.alevel.hw2.repository.WMRepository;
-import ua.com.alevel.hw2.service.MouseService;
-import ua.com.alevel.hw2.service.PhoneService;
-import ua.com.alevel.hw2.service.TechProductService;
-import ua.com.alevel.hw2.service.WMService;
+import ua.com.alevel.hw2.model.product.Phone;
+import ua.com.alevel.hw2.model.product.TechProduct;
+import ua.com.alevel.hw2.model.product.TechProductType;
 import ua.com.alevel.hw2.tree.BSTree;
-
-import java.util.List;
-import java.util.Random;
 
 public class Tree implements Command{
     public static final int N = 6;

@@ -1,4 +1,4 @@
-package ua.com.alevel.hw2.model;
+package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,11 @@ public class WashingMachine extends TechProduct {
 
     public WashingMachine(String model, Manufacturer manufacturer, int count, double price, int turnsNumber) {
         super(model, manufacturer, count, price);
+        this.turnsNumber = turnsNumber;
+    }
+
+    public WashingMachine(String id, String model, Manufacturer manufacturer, int count, double price, int turnsNumber) {
+        super(id, model, manufacturer, count, price);
         this.turnsNumber = turnsNumber;
     }
 

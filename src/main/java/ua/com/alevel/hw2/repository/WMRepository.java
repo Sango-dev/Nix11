@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
-import ua.com.alevel.hw2.model.WashingMachine;
+import ua.com.alevel.hw2.model.product.WashingMachine;
 
 import java.util.*;
 

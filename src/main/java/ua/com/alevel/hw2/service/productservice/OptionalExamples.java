@@ -1,8 +1,7 @@
-package ua.com.alevel.hw2.service;
+package ua.com.alevel.hw2.service.productservice;
 
-import ua.com.alevel.hw2.annotation.Autowired;
-import ua.com.alevel.hw2.model.Manufacturer;
-import ua.com.alevel.hw2.model.Phone;
+import ua.com.alevel.hw2.model.product.Manufacturer;
+import ua.com.alevel.hw2.model.product.Phone;
 import ua.com.alevel.hw2.repository.PhoneRepository;
 
 import java.util.Optional;

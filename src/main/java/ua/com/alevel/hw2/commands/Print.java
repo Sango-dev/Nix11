@@ -1,10 +1,10 @@
 package ua.com.alevel.hw2.commands;
 
-import ua.com.alevel.hw2.model.*;
-import ua.com.alevel.hw2.service.MouseService;
-import ua.com.alevel.hw2.service.PhoneService;
-import ua.com.alevel.hw2.service.TechProductService;
-import ua.com.alevel.hw2.service.WMService;
+import ua.com.alevel.hw2.model.product.*;
+import ua.com.alevel.hw2.service.productservice.MouseService;
+import ua.com.alevel.hw2.service.productservice.PhoneService;
+import ua.com.alevel.hw2.service.productservice.TechProductService;
+import ua.com.alevel.hw2.service.productservice.WMService;
 import ua.com.alevel.hw2.util.UtilInputUser;
 
 import java.util.Arrays;

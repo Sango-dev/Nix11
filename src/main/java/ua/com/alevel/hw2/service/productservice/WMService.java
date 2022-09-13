@@ -1,27 +1,27 @@
-package ua.com.alevel.hw2.service;
+package ua.com.alevel.hw2.service.productservice;
 
 import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
-import ua.com.alevel.hw2.model.Manufacturer;
-import ua.com.alevel.hw2.model.WashingMachine;
-import ua.com.alevel.hw2.repository.CrudRepository;
-import ua.com.alevel.hw2.repository.WMRepository;
+import ua.com.alevel.hw2.dao.productdao.WMDao;
+import ua.com.alevel.hw2.model.product.Manufacturer;
+import ua.com.alevel.hw2.model.product.WashingMachine;
 
 import java.util.Map;
 
 @Singleton
 public class WMService extends TechProductService<WashingMachine> {
-
     private static WMService instance;
+    private final WMDao wmDao;
 
     @Autowired
-    private WMService(final WMRepository repository) {
-        super(repository);
+    private WMService(final WMDao wmDao) {
+        super(wmDao);
+        this.wmDao = wmDao;
     }
 
     public static WMService getInstance() {
         if (instance == null) {
-            instance = new WMService(WMRepository.getInstance());
+            instance = new WMService(WMDao.getInstance());
         }
         return instance;
     }

@@ -1,11 +1,10 @@
-package ua.com.alevel.hw2.service;
+package ua.com.alevel.hw2.service.productservice;
 
 import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
-import ua.com.alevel.hw2.model.Manufacturer;
-import ua.com.alevel.hw2.model.Phone;
-import ua.com.alevel.hw2.repository.CrudRepository;
-import ua.com.alevel.hw2.repository.PhoneRepository;
+import ua.com.alevel.hw2.dao.productdao.PhoneDao;
+import ua.com.alevel.hw2.model.product.Manufacturer;
+import ua.com.alevel.hw2.model.product.Phone;
 
 import java.util.Map;
 
@@ -14,24 +13,24 @@ public class PhoneService extends TechProductService<Phone> {
 
     private static PhoneService instance;
 
-    private final PhoneRepository repository;
+    private final PhoneDao phoneDao;
 
     @Autowired
-    private PhoneService(final PhoneRepository repository) {
-        super(repository);
-        this.repository = repository;
+    private PhoneService(final PhoneDao phoneDao) {
+        super(phoneDao);
+        this.phoneDao = phoneDao;
     }
 
     public static PhoneService getInstance() {
         if (instance == null) {
-            instance = new PhoneService(PhoneRepository.getInstance());
+            instance = new PhoneService(PhoneDao.getInstance());
         }
         return instance;
     }
 
-    public static PhoneService getInstance(final PhoneRepository repository) {
+    public static PhoneService getInstance(final PhoneDao phoneDao) {
         if (instance == null) {
-            instance = new PhoneService(repository);
+            instance = new PhoneService(phoneDao);
         }
         return instance;
     }

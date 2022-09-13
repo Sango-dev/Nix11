@@ -1,4 +1,4 @@
-package ua.com.alevel.hw2.model;
+package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +16,12 @@ public class Mouse extends TechProduct {
 
     public Mouse(String model, Manufacturer manufacturer, int count, double price, ConnectionType connectionType, int dpiAmount) {
         super(model, manufacturer, count, price);
+        this.connectionType = connectionType;
+        this.dpiAmount = dpiAmount;
+    }
+
+    public Mouse(String id, String model, Manufacturer manufacturer, int count, double price, ConnectionType connectionType, int dpiAmount) {
+        super(id, model, manufacturer, count, price);
         this.connectionType = connectionType;
         this.dpiAmount = dpiAmount;
     }

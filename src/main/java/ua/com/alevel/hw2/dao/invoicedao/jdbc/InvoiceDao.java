@@ -1,7 +1,8 @@
-package ua.com.alevel.hw2.dao.invoicedao;
+package ua.com.alevel.hw2.dao.invoicedao.jdbc;
 
 import lombok.SneakyThrows;
 import ua.com.alevel.hw2.config.JDBCConfig;
+import ua.com.alevel.hw2.dao.invoicedao.IInvoiceDao;
 import ua.com.alevel.hw2.model.invoice.Invoice;
 import ua.com.alevel.hw2.model.product.*;
 
@@ -89,7 +90,7 @@ public class InvoiceDao implements IInvoiceDao {
         String id = resultSet.getString("id");
         double sum = resultSet.getDouble("sum");
         Date created = resultSet.getDate("created");
-        return new Invoice(id, sum, null, created);
+        return new Invoice(sum, null, created);
     }
 
     private List<TechProduct> restoreProductsFromResultSet(Map<Class<?>, String> queries, Invoice invoice) {

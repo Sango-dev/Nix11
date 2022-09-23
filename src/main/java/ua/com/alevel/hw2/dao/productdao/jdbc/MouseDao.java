@@ -1,7 +1,8 @@
-package ua.com.alevel.hw2.dao.productdao;
+package ua.com.alevel.hw2.dao.productdao.jdbc;
 
 import lombok.SneakyThrows;
 import ua.com.alevel.hw2.config.JDBCConfig;
+import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.product.ConnectionType;
 import ua.com.alevel.hw2.model.product.Manufacturer;
 import ua.com.alevel.hw2.model.product.Mouse;
@@ -86,7 +87,7 @@ public class MouseDao implements IProductDao<Mouse> {
     }
 
     @Override
-    public boolean update(Mouse product) {
+    public void update(Mouse product) {
         String sql = """
                 UPDATE \"public\".\"Mouse\" 
                 SET model = ?, manufacturer = ?, count = ?, price = ?, connection_type = ?, dpi_amount = ? 
@@ -95,21 +96,21 @@ public class MouseDao implements IProductDao<Mouse> {
 
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(sql)) {
             setObjectFields(preparedStatement, product, true);
-            return preparedStatement.execute();
+            preparedStatement.execute();
         } catch (SQLException sqle) {
             throw new RuntimeException(sqle);
         }
     }
 
     @Override
-    public boolean delete(String id) {
+    public void delete(String id) {
         String sql = """
                 DELETE FROM \"public\".\"Mouse\" WHERE id = ?;
                 """;
 
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(sql)) {
             preparedStatement.setString(1, id);
-            return preparedStatement.execute();
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

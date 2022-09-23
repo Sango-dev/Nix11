@@ -1,15 +1,20 @@
 package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
 public class WashingMachine extends TechProduct {
-
-    private final int turnsNumber;
+    @Column(name = "turns_number")
+    private int turnsNumber;
 
     public WashingMachine(String model, Manufacturer manufacturer, int count, double price, int turnsNumber) {
         super(model, manufacturer, count, price);

@@ -41,17 +41,17 @@ public abstract class TechProductService<T extends TechProduct> {
         }
     }
 
-    public boolean update(TechProduct product) {
+    public void update(TechProduct product) {
         if (product != null) {
-            return repository.update((T) product);
+            repository.update((T) product);
         } else {
             throw new IllegalArgumentException("product cannot be null");
         }
     }
 
-    public boolean delete(String id) {
+    public void  delete(String id) {
         if (id != null) {
-            return repository.delete(id);
+            repository.delete(id);
         } else {
             throw new IllegalArgumentException("id cannot be null");
         }

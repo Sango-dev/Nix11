@@ -2,7 +2,7 @@ package ua.com.alevel.hw2.service.productservice;
 
 import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
-import ua.com.alevel.hw2.dao.productdao.MouseDao;
+import ua.com.alevel.hw2.dao.productdao.hibernate.MouseDaoJPA;
 import ua.com.alevel.hw2.model.product.ConnectionType;
 import ua.com.alevel.hw2.model.product.Manufacturer;
 import ua.com.alevel.hw2.model.product.Mouse;
@@ -13,17 +13,17 @@ import java.util.Map;
 public class MouseService extends TechProductService<Mouse> {
     private static MouseService instance;
 
-    private final MouseDao mouseDao;
+    private final MouseDaoJPA mouseDaoJPA;
 
     @Autowired
-    private MouseService(final MouseDao mouseDao) {
-        super(mouseDao);
-        this.mouseDao = mouseDao;
+    private MouseService(final MouseDaoJPA mouseDaoJPA) {
+        super(mouseDaoJPA);
+        this.mouseDaoJPA = mouseDaoJPA;
     }
 
     public static MouseService getInstance() {
         if (instance == null) {
-            instance = new MouseService(MouseDao.getInstance());
+            instance = new MouseService(MouseDaoJPA.getInstance());
         }
         return instance;
     }

@@ -1,18 +1,23 @@
 package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
 public class Mouse extends TechProduct {
-
+    @Column(name = "connection_type")
     private ConnectionType connectionType;
-    private int dpiAmount;
 
-    private Mouse() {}
+    @Column(name = "dpi_amount")
+    private int dpiAmount;
 
     public Mouse(String model, Manufacturer manufacturer, int count, double price, ConnectionType connectionType, int dpiAmount) {
         super(model, manufacturer, count, price);

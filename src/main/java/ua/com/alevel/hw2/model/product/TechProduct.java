@@ -38,7 +38,6 @@ public abstract class TechProduct {
     protected Invoice invoice;
 
     public TechProduct(String model, Manufacturer manufacturer, int count, double price) {
-        id = UUID.randomUUID().toString();
         this.model = model;
         this.manufacturer = manufacturer;
         this.count = count;

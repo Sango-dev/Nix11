@@ -3,6 +3,7 @@ package ua.com.alevel.hw2.dao.productdao.hibernate;
 import ua.com.alevel.hw2.config.EntityManagerConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.product.Mouse;
+import ua.com.alevel.hw2.model.product.Phone;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -56,10 +57,11 @@ public final class MouseDaoJPA implements IProductDao<Mouse> {
 
     @Override
     public Optional<Mouse> findById(String id) {
-        Optional<Mouse> mouse = (Optional<Mouse>) MANAGER.createQuery("from Mouse as m where m.id = :id")
+        List<Mouse> list = MANAGER.createQuery("from Mouse as m where m.id = :id")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (mouse.isPresent()) ? mouse : Optional.empty();
+                .getResultList();
+
+        return (list.isEmpty()) ? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override
@@ -72,9 +74,10 @@ public final class MouseDaoJPA implements IProductDao<Mouse> {
 
     @Override
     public boolean checkNullForeignInvoiceID(String id) {
-        Optional<Mouse> mouse = (Optional<Mouse>) MANAGER.createQuery("from Mouse as m where m.id = :id and m.invoice_id = null")
+        List<Mouse> list = MANAGER.createQuery("from Mouse as m where m.id = :id and m.invoice = null")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (mouse.isPresent()) ? true : false;
+                .getResultList();
+
+        return (list.isEmpty()) ? false : true;
     }
 }

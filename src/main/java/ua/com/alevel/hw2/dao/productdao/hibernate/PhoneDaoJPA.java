@@ -3,6 +3,7 @@ package ua.com.alevel.hw2.dao.productdao.hibernate;
 import ua.com.alevel.hw2.config.EntityManagerConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.product.Phone;
+import ua.com.alevel.hw2.model.product.WashingMachine;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -56,10 +57,11 @@ public final class PhoneDaoJPA implements IProductDao<Phone> {
 
     @Override
     public Optional<Phone> findById(String id) {
-        Optional<Phone> phone = (Optional<Phone>) MANAGER.createQuery("from Phone as p where p.id = :id")
+        List<Phone> list = MANAGER.createQuery("from Phone as p where p.id = :id")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (phone.isPresent()) ? phone : Optional.empty();
+                .getResultList();
+
+        return (list.isEmpty()) ? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override
@@ -72,9 +74,10 @@ public final class PhoneDaoJPA implements IProductDao<Phone> {
 
     @Override
     public boolean checkNullForeignInvoiceID(String id) {
-        Optional<Phone> phone = (Optional<Phone>) MANAGER.createQuery("from Phone as p where p.id = :id and p.invoice_id = null")
+        List<Phone> list = MANAGER.createQuery("from Phone as p where p.id = :id and p.invoice = null")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (phone.isPresent()) ? true : false;
+                .getResultList();
+
+        return (list.isEmpty()) ? false : true;
     }
 }

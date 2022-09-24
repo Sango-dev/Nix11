@@ -56,7 +56,7 @@ public final class InvoiceService {
         invoiceDaoJPA.updateDate(id, date);
     }
 
-    public Map<Double, Integer> groupingBySum() {
+    public Map<Double, Long> groupingBySum() {
         return invoiceDaoJPA.groupingBySum();
     }
 }

@@ -2,6 +2,7 @@ package ua.com.alevel.hw2.dao.productdao.hibernate;
 
 import ua.com.alevel.hw2.config.EntityManagerConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
+import ua.com.alevel.hw2.model.product.Mouse;
 import ua.com.alevel.hw2.model.product.WashingMachine;
 
 import javax.persistence.EntityManager;
@@ -56,15 +57,16 @@ public final class WMDaoJPA implements IProductDao<WashingMachine> {
 
     @Override
     public Optional<WashingMachine> findById(String id) {
-        Optional<WashingMachine> machine = (Optional<WashingMachine>) MANAGER.createQuery("from Washing_Machine as wm where wm.id = :id")
+        List<WashingMachine> list = MANAGER.createQuery("from WashingMachine as wm where wm.id = :id")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (machine.isPresent()) ? machine : Optional.empty();
+                .getResultList();
+
+        return (list.isEmpty()) ? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override
     public List<WashingMachine> getAll() {
-        List<WashingMachine> list = MANAGER.createQuery("from Washing_Machine")
+        List<WashingMachine> list = MANAGER.createQuery("from WashingMachine")
                 .getResultList();
 
         return (list.isEmpty()) ? Collections.emptyList() : list;
@@ -72,9 +74,10 @@ public final class WMDaoJPA implements IProductDao<WashingMachine> {
 
     @Override
     public boolean checkNullForeignInvoiceID(String id) {
-        Optional<WashingMachine> machine = (Optional<WashingMachine>) MANAGER.createQuery("from Washing_Machine as wm where wm.id = :id and wm.invoice_id = null")
+        List<WashingMachine> list = MANAGER.createQuery("from WashingMachine as wm where wm.id = :id and wm.invoice = null")
                 .setParameter("id", id)
-                .getSingleResult();
-        return (machine.isPresent()) ? true : false;
+                .getResultList();
+
+        return (list.isEmpty()) ? false : true;
     }
 }

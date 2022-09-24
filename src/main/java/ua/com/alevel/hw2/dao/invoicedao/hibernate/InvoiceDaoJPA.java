@@ -44,11 +44,11 @@ public class InvoiceDaoJPA implements IInvoiceDao {
 
     @Override
     public Optional<Invoice> findById(String id) {
-        Optional<Invoice> invoice = (Optional<Invoice>) MANAGER.createQuery("from Invoice as i where i.id = :id")
+        List<Invoice> list = MANAGER.createQuery("from Invoice as i where i.id = :id")
                 .setParameter("id", id)
-                .getSingleResult();
+                .getResultList();
 
-        return (invoice.isPresent()) ? invoice : Optional.empty();
+        return (list.isEmpty()) ? Optional.empty() : Optional.of(list.get(0));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class InvoiceDaoJPA implements IInvoiceDao {
         return (list.isEmpty()) ? Collections.emptyList() : list;
     }
 
-    public Map<Double, Integer> groupingBySum() {
+    public Map<Double, Long> groupingBySum() {
         CriteriaBuilder cb = MANAGER.getCriteriaBuilder();
         CriteriaQuery<Object[]> cr = cb.createQuery(Object[].class);
         Root<Invoice> root = cr.from(Invoice.class);
@@ -89,8 +89,8 @@ public class InvoiceDaoJPA implements IInvoiceDao {
         cr.groupBy(root.get("sum"));
 
         List<Object[]> result = MANAGER.createQuery(cr).getResultList();
-        Map<Double, Integer> rez = new HashMap<>();
-        result.forEach(el -> rez.put((Double) el[1], (Integer) el[0]));
+        Map<Double, Long> rez = new HashMap<>();
+        result.forEach(el -> rez.put((Double) el[1], (Long) el[0]));
 
         return (rez.isEmpty()) ? Collections.emptyMap() : rez;
     }

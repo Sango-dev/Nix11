@@ -10,9 +10,9 @@ public interface IProductDao<T extends TechProduct> {
 
     void saveAll(List<T> products);
 
-    boolean update(T product);
+    void update(T product);
 
-    boolean delete(String id);
+    void delete(String id);
 
     List<T> getAll();
 

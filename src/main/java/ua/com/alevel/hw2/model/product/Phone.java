@@ -1,18 +1,28 @@
 package ua.com.alevel.hw2.model.product;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
 public class Phone extends TechProduct {
+    @Column(name = "core_numbers")
+    private int coreNumbers;
 
-    private final int coreNumbers;
-    private final int batteryPower;
+    @Column(name = "battery_power")
+    private int batteryPower;
+
+    @Transient
     private List<String> details;
 
     public Phone(String model, Manufacturer manufacturer, int count, double price, int coreNumbers, int batteryPower) {

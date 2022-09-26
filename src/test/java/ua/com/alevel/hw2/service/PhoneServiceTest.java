@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import ua.com.alevel.hw2.dao.productdao.PhoneDao;
+import ua.com.alevel.hw2.dao.productdao.hibernate.PhoneDaoJPA;
 import ua.com.alevel.hw2.factory.ProductFactory;
 import ua.com.alevel.hw2.model.product.Phone;
 import ua.com.alevel.hw2.model.product.TechProductType;
@@ -21,18 +21,18 @@ import static org.mockito.Mockito.mock;
 class PhoneServiceTest {
 
     private static PhoneService target;
-    private static PhoneDao phoneDao;
+    private static PhoneDaoJPA phoneDaoJPA;
     private Phone phone;
 
     @BeforeAll
     static void beforeAll() {
-        phoneDao = mock(PhoneDao.class);
-        target = PhoneService.getInstance(phoneDao);
+        phoneDaoJPA = mock(PhoneDaoJPA.class);
+        target = PhoneService.getInstance(phoneDaoJPA);
     }
 
     @BeforeEach
     void setUp() {
-        Mockito.reset(phoneDao);
+        Mockito.reset(phoneDaoJPA);
         phone = (Phone) ProductFactory.createProduct(TechProductType.PHONE);
     }
 
@@ -44,14 +44,14 @@ class PhoneServiceTest {
     @Test
     void createAndSave() {
         target.createAndSave(2, TechProductType.PHONE);
-        Mockito.verify(phoneDao).saveAll(Mockito.anyList());
+        Mockito.verify(phoneDaoJPA).saveAll(Mockito.anyList());
     }
 
     @Test
     void save() {
         target.save(phone);
         ArgumentCaptor<Phone> argument = ArgumentCaptor.forClass(Phone.class);
-        Mockito.verify(phoneDao).save(argument.capture());
+        Mockito.verify(phoneDaoJPA).save(argument.capture());
         assertEquals(phone.getModel(), argument.getValue().getModel());
     }
 
@@ -64,7 +64,7 @@ class PhoneServiceTest {
     void update() {
         target.update(phone);
         ArgumentCaptor<Phone> argument = ArgumentCaptor.forClass(Phone.class);
-        Mockito.verify(phoneDao).update(argument.capture());
+        Mockito.verify(phoneDaoJPA).update(argument.capture());
     }
 
     @Test
@@ -75,7 +75,7 @@ class PhoneServiceTest {
     @Test
     void delete() {
         target.delete(phone.getId());
-        Mockito.verify(phoneDao).delete(Mockito.anyString());
+        Mockito.verify(phoneDaoJPA).delete(Mockito.anyString());
     }
 
     @Test
@@ -85,12 +85,12 @@ class PhoneServiceTest {
 
     @Test
     void findById() {
-        Mockito.when(phoneDao.findById(
+        Mockito.when(phoneDaoJPA.findById(
                 ArgumentMatchers.argThat(arg ->
                         arg.equals("uAlU5")))).thenReturn(Optional.ofNullable(phone));
 
         Optional<Phone> dupMachine = target.findById("uAlU5");
-        Mockito.verify(phoneDao).findById(Mockito.anyString());
+        Mockito.verify(phoneDaoJPA).findById(Mockito.anyString());
         Assertions.assertEquals(phone, dupMachine.get());
     }
 
@@ -102,6 +102,6 @@ class PhoneServiceTest {
     @Test
     void getAll() {
         target.getAll();
-        Mockito.verify(phoneDao).getAll();
+        Mockito.verify(phoneDaoJPA).getAll();
     }
 }

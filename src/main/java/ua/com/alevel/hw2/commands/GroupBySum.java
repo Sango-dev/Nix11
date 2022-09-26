@@ -9,7 +9,7 @@ public class GroupBySum implements Command {
 
     @Override
     public void execute() {
-        Map<Double, Integer> groups = INVOICE_SERVICE.groupingBySum();
+        Map<Double, Long> groups = INVOICE_SERVICE.groupingBySum();
         System.out.println("SUM | Amount");
         groups.forEach((key, value) -> System.out.println(key + " : " + value));
     }

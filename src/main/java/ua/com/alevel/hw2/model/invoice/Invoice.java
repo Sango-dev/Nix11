@@ -11,11 +11,11 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
 public class Invoice {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,12 +26,20 @@ public class Invoice {
     private double sum;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<TechProduct> products;
+    private transient List<TechProduct> products;
+
+    @Transient
+    private List<String> productInMongo;
 
     @Column
     private Date date;
 
+    public Invoice() {
+        this.id = UUID.randomUUID().toString();
+    }
+
     public Invoice(double sum, List<TechProduct> products, Date date) {
+        this();
         this.sum = sum;
         this.products = products;
         this.date = date;

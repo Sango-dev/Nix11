@@ -2,8 +2,10 @@ package ua.com.alevel.hw2.service.productservice;
 
 import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
+import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.dao.productdao.hibernate.PhoneDaoJPA;
 import ua.com.alevel.hw2.dao.productdao.jdbc.PhoneDao;
+import ua.com.alevel.hw2.dao.productdao.mongo.PhoneMongoDao;
 import ua.com.alevel.hw2.model.product.Manufacturer;
 import ua.com.alevel.hw2.model.product.Phone;
 
@@ -11,27 +13,23 @@ import java.util.Map;
 
 @Singleton
 public class PhoneService extends TechProductService<Phone> {
-
     private static PhoneService instance;
 
-    private final PhoneDaoJPA phoneDaoJPA;
-
     @Autowired
-    private PhoneService(final PhoneDaoJPA phoneDaoJPA) {
-        super(phoneDaoJPA);
-        this.phoneDaoJPA = phoneDaoJPA;
+    private PhoneService(final IProductDao<Phone> dao) {
+        super(dao);
     }
 
     public static PhoneService getInstance() {
         if (instance == null) {
-            instance = new PhoneService(PhoneDaoJPA.getInstance());
+            instance = new PhoneService(PhoneMongoDao.getInstance());
         }
         return instance;
     }
 
-    public static PhoneService getInstance(final PhoneDaoJPA phoneDaoJPA) {
+    public static PhoneService getInstance(final IProductDao<Phone> dao) {
         if (instance == null) {
-            instance = new PhoneService(phoneDaoJPA);
+            instance = new PhoneService(dao);
         }
         return instance;
     }

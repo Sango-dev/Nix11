@@ -3,11 +3,12 @@ package ua.com.alevel.hw2.dao.productdao.mongo;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import ua.com.alevel.hw2.config.MongoDBConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.invoice.Invoice;
-import ua.com.alevel.hw2.model.product.Mouse;
 import ua.com.alevel.hw2.model.product.WashingMachine;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public class WMMongoDao implements IProductDao<WashingMachine> {
     private static Gson gson;
     private static WMMongoDao instance;
 
-    private WMMongoDao () {
+    private WMMongoDao() {
         gson = new Gson();
     }
 
@@ -46,7 +47,15 @@ public class WMMongoDao implements IProductDao<WashingMachine> {
 
     @Override
     public void update(WashingMachine product) {
-        WM.updateOne(Filters.eq("id", product.getId()), new Document("$set", gson.toJson(product)));
+        Bson filter = Filters.eq("id", product.getId());
+        Bson updates = Updates.combine(
+                Updates.set("model", product.getModel()),
+                Updates.set("manufacturer", product.getManufacturer().name()),
+                Updates.set("count", product.getCount()),
+                Updates.set("turnsNumber", product.getTurnsNumber()),
+                Updates.set("price", product.getPrice()));
+
+        WM.updateOne(filter, updates);
     }
 
     @Override
@@ -60,7 +69,7 @@ public class WMMongoDao implements IProductDao<WashingMachine> {
                 .map(element -> gson.fromJson(element.toJson(), WashingMachine.class))
                 .first();
 
-        return Optional.of(washingMachine);
+        return Optional.ofNullable(washingMachine);
     }
 
     @Override
@@ -77,8 +86,14 @@ public class WMMongoDao implements IProductDao<WashingMachine> {
             return false;
         }
 
-        return (list.stream()
-                .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
-                .toList().isEmpty()) ? true : false;
+        for (WashingMachine washingMachine : list) {
+            if (washingMachine.getId().equals(id)) {
+                return (list.stream()
+                        .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
+                        .toList().isEmpty()) ? true : false;
+            }
+        }
+
+        return false;
     }
 }

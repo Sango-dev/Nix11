@@ -8,10 +8,7 @@ import ua.com.alevel.hw2.model.product.TechProduct;
 
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -43,6 +40,8 @@ public class Invoice {
         this.sum = sum;
         this.products = products;
         this.date = date;
+        productInMongo = new ArrayList<>();
+        this.products.forEach(product -> productInMongo.add(product.getId()));
     }
 
     @Override

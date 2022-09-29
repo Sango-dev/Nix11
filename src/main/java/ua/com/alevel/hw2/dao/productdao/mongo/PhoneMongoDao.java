@@ -1,9 +1,13 @@
 package ua.com.alevel.hw2.dao.productdao.mongo;
 
 import com.google.gson.Gson;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import lombok.SneakyThrows;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import ua.com.alevel.hw2.config.MongoDBConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.invoice.Invoice;
@@ -43,9 +47,19 @@ public class PhoneMongoDao implements IProductDao<Phone> {
         PHONES.insertMany(list);
     }
 
+    @SneakyThrows
     @Override
     public void update(Phone product) {
-        PHONES.updateOne(Filters.eq("id", product.getId()), new Document("$set", gson.toJson(product)));
+        Bson filter = Filters.eq("id", product.getId());
+        Bson updates = Updates.combine(
+                Updates.set("model", product.getModel()),
+                Updates.set("manufacturer", product.getManufacturer().name()),
+                Updates.set("count", product.getCount()),
+                Updates.set("coreNumbers", product.getCoreNumbers()),
+                Updates.set("price", product.getPrice()),
+                Updates.set("batteryPower", product.getBatteryPower()));
+
+        PHONES.updateOne(filter, updates);
     }
 
     @Override
@@ -59,7 +73,7 @@ public class PhoneMongoDao implements IProductDao<Phone> {
                 .map(element -> gson.fromJson(element.toJson(), Phone.class))
                 .first();
 
-        return Optional.of(phone);
+        return Optional.ofNullable(phone);
     }
 
     @Override
@@ -76,8 +90,14 @@ public class PhoneMongoDao implements IProductDao<Phone> {
             return false;
         }
 
-        return (list.stream()
-                .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
-                .toList().isEmpty()) ? true : false;
+        for (Phone phone : list) {
+            if (phone.getId().equals(id)) {
+                return (list.stream()
+                        .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
+                        .toList().isEmpty()) ? true : false;
+            }
+        }
+
+        return false;
     }
 }

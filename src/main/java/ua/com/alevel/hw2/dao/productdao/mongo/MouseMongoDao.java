@@ -3,12 +3,13 @@ package ua.com.alevel.hw2.dao.productdao.mongo;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import ua.com.alevel.hw2.config.MongoDBConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.invoice.Invoice;
 import ua.com.alevel.hw2.model.product.Mouse;
-import ua.com.alevel.hw2.model.product.Phone;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class MouseMongoDao implements IProductDao<Mouse> {
     private static Gson gson;
     private static MouseMongoDao instance;
 
-    private MouseMongoDao () {
+    private MouseMongoDao() {
         gson = new Gson();
     }
 
@@ -46,7 +47,16 @@ public class MouseMongoDao implements IProductDao<Mouse> {
 
     @Override
     public void update(Mouse product) {
-        MICE.updateOne(Filters.eq("id", product.getId()), new Document("$set", gson.toJson(product)));
+        Bson filter = Filters.eq("id", product.getId());
+        Bson updates = Updates.combine(
+                Updates.set("model", product.getModel()),
+                Updates.set("manufacturer", product.getManufacturer().name()),
+                Updates.set("count", product.getCount()),
+                Updates.set("connectionType", product.getConnectionType().name()),
+                Updates.set("price", product.getPrice()),
+                Updates.set("dpiAmount", product.getDpiAmount()));
+
+        MICE.updateOne(filter, updates);
     }
 
     @Override
@@ -60,7 +70,7 @@ public class MouseMongoDao implements IProductDao<Mouse> {
                 .map(element -> gson.fromJson(element.toJson(), Mouse.class))
                 .first();
 
-        return Optional.of(mouse);
+        return Optional.ofNullable(mouse);
     }
 
     @Override
@@ -77,8 +87,14 @@ public class MouseMongoDao implements IProductDao<Mouse> {
             return false;
         }
 
-        return (list.stream()
-                .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
-                .toList().isEmpty()) ? true : false;
+        for (Mouse mouse : list) {
+            if (mouse.getId().equals(id)) {
+                return (list.stream()
+                        .filter(product -> INVOICES.find(Filters.eq("productInMongo", product.getId())).first() != null)
+                        .toList().isEmpty()) ? true : false;
+            }
+        }
+
+        return false;
     }
 }

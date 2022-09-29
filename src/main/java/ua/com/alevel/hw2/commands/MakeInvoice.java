@@ -36,6 +36,7 @@ public class MakeInvoice implements Command {
                     flag = doExit(productList);
                     continue;
                 }
+
                 boolean isNull = PHONE_SERVICE.checkNullForeignInvoiceID(id) || MOUSE_SERVICE.checkNullForeignInvoiceID(id) || WASHING_MACHINE_SERVICE.checkNullForeignInvoiceID(id);
                 if (isNull == true) {
                     PHONE_SERVICE.findById(id).ifPresent(product -> productList.add(product));

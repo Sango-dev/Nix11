@@ -23,7 +23,7 @@ public class Phone extends TechProduct {
     private int batteryPower;
 
     @Transient
-    private List<String> details;
+    private transient List<String> details;
 
     public Phone(String model, Manufacturer manufacturer, int count, double price, int coreNumbers, int batteryPower) {
         super(model, manufacturer, count, price);

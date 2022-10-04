@@ -10,11 +10,12 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ProductShop"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="rootroot"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-44-205-63-142.compute-1.amazonaws.com:5432/d7fakea4aa1co4"/>
+            <property name="javax.persistence.jdbc.user" value="kwxmuuikcdvnus"/>
+            <property name="javax.persistence.jdbc.password" value="a7291f133f4577fbbbfceebfb070de06a62db5da0664e84b92d242ebd16853ce"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.default_schema" value="public"/>
         </properties>
     </persistence-unit>
 </persistence>

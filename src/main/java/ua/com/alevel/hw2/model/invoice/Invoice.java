@@ -23,7 +23,7 @@ public class Invoice {
     private double sum;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private transient List<TechProduct> products;
+    private List<TechProduct> products;
 
     @Transient
     private List<String> productInMongo;
@@ -31,12 +31,9 @@ public class Invoice {
     @Column
     private Date date;
 
-    public Invoice() {
-        this.id = UUID.randomUUID().toString();
-    }
+    public Invoice() {}
 
     public Invoice(double sum, List<TechProduct> products, Date date) {
-        this();
         this.sum = sum;
         this.products = products;
         this.date = date;

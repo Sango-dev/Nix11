@@ -1,5 +1,7 @@
 package ua.com.alevel.hw2.dao.productdao.hibernate;
 
+import ua.com.alevel.hw2.annotation.Autowired;
+import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.config.EntityManagerConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.product.Phone;
@@ -10,10 +12,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Singleton
 public final class PhoneDaoJPA implements IProductDao<Phone> {
     private static final EntityManager MANAGER = EntityManagerConfig.getEntityManager();
     private static PhoneDaoJPA instance;
 
+    @Autowired
     private PhoneDaoJPA() {}
 
     public static PhoneDaoJPA getInstance() {

@@ -34,14 +34,11 @@ public abstract class TechProduct {
 
     @ManyToOne
     @JoinColumn(name = "invoice_id")
-    protected transient Invoice invoice;
+    protected Invoice invoice;
 
-    public TechProduct() {
-        this.id = UUID.randomUUID().toString();
-    }
+    public TechProduct() {}
 
     public TechProduct(String model, Manufacturer manufacturer, int count, double price) {
-        this();
         this.model = model;
         this.manufacturer = manufacturer;
         this.count = count;

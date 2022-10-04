@@ -21,7 +21,7 @@ public class WMService extends TechProductService<WashingMachine> {
 
     public static WMService getInstance() {
         if (instance == null) {
-            instance = new WMService(WMMongoDao.getInstance());
+            instance = new WMService(WMDaoJPA.getInstance());
         }
         return instance;
     }

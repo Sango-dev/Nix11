@@ -4,6 +4,7 @@ import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.dao.productdao.hibernate.MouseDaoJPA;
+import ua.com.alevel.hw2.dao.productdao.mongo.MouseMongoDao;
 import ua.com.alevel.hw2.model.product.ConnectionType;
 import ua.com.alevel.hw2.model.product.Manufacturer;
 import ua.com.alevel.hw2.model.product.Mouse;
@@ -21,7 +22,7 @@ public class MouseService extends TechProductService<Mouse> {
 
     public static MouseService getInstance() {
         if (instance == null) {
-            instance = new MouseService(MouseDaoJPA.getInstance());
+            instance = new MouseService(MouseMongoDao.getInstance());
         }
         return instance;
     }

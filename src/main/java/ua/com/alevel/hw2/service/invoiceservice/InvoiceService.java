@@ -1,22 +1,22 @@
 package ua.com.alevel.hw2.service.invoiceservice;
 
-import ua.com.alevel.hw2.dao.invoicedao.hibernate.InvoiceDaoJPA;
+import ua.com.alevel.hw2.dao.invoicedao.mongo.InvoiceMongoDao;
 import ua.com.alevel.hw2.model.invoice.Invoice;
 import ua.com.alevel.hw2.model.product.TechProduct;
 
 import java.util.*;
 
 public final class InvoiceService {
-    private final InvoiceDaoJPA invoiceDaoJPA;
+    private final InvoiceMongoDao invoiceMongoDao;
     private static InvoiceService instance;
 
-    private InvoiceService(InvoiceDaoJPA invoiceDaoJPA) {
-        this.invoiceDaoJPA = invoiceDaoJPA;
+    private InvoiceService(InvoiceMongoDao invoiceMongoDao) {
+        this.invoiceMongoDao = invoiceMongoDao;
     }
 
     public static InvoiceService getInstance() {
         if (instance == null) {
-            instance = new InvoiceService(InvoiceDaoJPA.getInstance());
+            instance = new InvoiceService(InvoiceMongoDao.getInstance());
         }
         return instance;
     }
@@ -30,33 +30,33 @@ public final class InvoiceService {
         if (invoice == null) {
             throw new IllegalArgumentException("Invoice must not be null!");
         }
-        invoiceDaoJPA.save(invoice);
+        invoiceMongoDao.save(invoice);
     }
 
     public Optional<Invoice> findById(String id) {
         if (id == null) {
             throw new IllegalArgumentException("Id must not be null!");
         }
-        return invoiceDaoJPA.findById(id);
+        return invoiceMongoDao.findById(id);
     }
 
     public List<Invoice> getAll() {
-        return invoiceDaoJPA.getAll();
+        return invoiceMongoDao.getAll();
     }
 
     public int getInvoiceAmount() {
-        return invoiceDaoJPA.getInvoiceAmount();
+        return invoiceMongoDao.getInvoiceAmount();
     }
 
     public List<Invoice> getInvoicesWhereSumMoreThanPrice(double price) {
-        return invoiceDaoJPA.getInvoicesWhereSumMoreThanPrice(price);
+        return invoiceMongoDao.getInvoicesWhereSumMoreThanPrice(price);
     }
 
     public void updateDate(String id, Date date) {
-        invoiceDaoJPA.updateDate(id, date);
+        invoiceMongoDao.updateDate(id, date);
     }
 
-    public Map<Double, Long> groupingBySum() {
-        return invoiceDaoJPA.groupingBySum();
+    public Map<Double, Integer> groupingBySum() {
+        return invoiceMongoDao.groupingBySum();
     }
 }

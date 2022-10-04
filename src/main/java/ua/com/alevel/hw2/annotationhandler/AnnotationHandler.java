@@ -33,7 +33,7 @@ public final class AnnotationHandler {
                         Object object = constructor.newInstance();
                         Field field = aClass.getDeclaredField("instance");
                         field.setAccessible(true);
-                        field.set(null, object);
+                        field.set(object, object);
                         caches.put(aClass, object);
                     }
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
@@ -47,12 +47,11 @@ public final class AnnotationHandler {
                 try {
                     if (constructor.getParameterCount() == 1 && constructor.isAnnotationPresent(Autowired.class)) {
                         constructor.setAccessible(true);
-                        Field classDB = constructor.getParameterTypes()[0].getDeclaredField("instance");
-                        classDB.setAccessible(true);
-                        Object object = constructor.newInstance(classDB.get(classDB.getType()));
+                        Class repository = constructor.getParameterTypes()[0];
+                        Object object = constructor.newInstance(caches.get(repository));
                         Field field = aClass.getDeclaredField("instance");
                         field.setAccessible(true);
-                        field.set(null, object);
+                        field.set(object, object);
                         caches.put(aClass, object);
                     }
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {

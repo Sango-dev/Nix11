@@ -1,7 +1,5 @@
 package ua.com.alevel.hw2.dao.productdao.hibernate;
 
-import ua.com.alevel.hw2.annotation.Autowired;
-import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.config.EntityManagerConfig;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.model.product.Mouse;
@@ -12,12 +10,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Singleton
 public final class MouseDaoJPA implements IProductDao<Mouse> {
     private static final EntityManager MANAGER = EntityManagerConfig.getEntityManager();
     private static MouseDaoJPA instance;
 
-    @Autowired
     private MouseDaoJPA() {}
 
     public static MouseDaoJPA getInstance() {

@@ -4,6 +4,8 @@ import ua.com.alevel.hw2.annotation.Autowired;
 import ua.com.alevel.hw2.annotation.Singleton;
 import ua.com.alevel.hw2.dao.productdao.IProductDao;
 import ua.com.alevel.hw2.dao.productdao.hibernate.PhoneDaoJPA;
+import ua.com.alevel.hw2.dao.productdao.jdbc.PhoneDao;
+import ua.com.alevel.hw2.dao.productdao.mongo.PhoneMongoDao;
 import ua.com.alevel.hw2.model.product.Manufacturer;
 import ua.com.alevel.hw2.model.product.Phone;
 
@@ -20,7 +22,7 @@ public class PhoneService extends TechProductService<Phone> {
 
     public static PhoneService getInstance() {
         if (instance == null) {
-            instance = new PhoneService(PhoneDaoJPA.getInstance());
+            instance = new PhoneService(PhoneMongoDao.getInstance());
         }
         return instance;
     }

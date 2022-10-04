@@ -1,5 +1,4 @@
 package ua.com.alevel.hw2;
-import org.flywaydb.core.Flyway;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
